@@ -531,15 +531,6 @@
             );
         };
 
-        const AlcoholWarning = () => {
-             return (
-                <div className="alcohol-warning-container">
-                    <img src={WARNING_IMAGE_URL} alt="禁止酒駕" className="alcohol-warning-img" />
-                    <span className="alcohol-warning-text">禁止酒駕，未滿十八歲禁止飲酒</span>
-                </div>
-            );
-        };
-
         const Header = ({ onViewChange, currentView, lang, setLang, t }) => {
             const [isScrolled, setIsScrolled] = useState(false);
             const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -1196,16 +1187,17 @@
             const [lang, setLang] = useState('zh-TW');
             const t = translations[lang];
 
-            const handleCreditCardClick = () => {
-                setIsPaymentModalOpen(false);
-                const socialSection = document.getElementById('social-contact');
-                if (socialSection) socialSection.scrollIntoView({ behavior: 'smooth' });
-            };
+const handleCreditCardClick = () => {
+    setIsPaymentModalOpen(false);
+    const socialSection = document.getElementById('social-contact');
+    if (socialSection) socialSection.scrollIntoView({ behavior: 'smooth' });
+};
 
-            const handleTransferClick = () => {
-                setIsPaymentModalOpen(false);
-                setCurrentView('payment');
-            };
+const handleTransferClick = () => {
+    setIsPaymentModalOpen(false);
+    const socialSection = document.getElementById('social-contact');
+    if (socialSection) socialSection.scrollIntoView({ behavior: 'smooth' });
+};
 
             return (
                 <div className={`antialiased selection:bg-amber-200 selection:text-amber-900 ${lang === 'en' ? 'en-font' : ''}`}>
@@ -1226,36 +1218,39 @@
                     {currentView === 'payment' && <PaymentPage onBack={() => setCurrentView('main')} />}
                     
                     <Footer t={t} />
-                    <AlcoholWarning />
 
                     {/* Payment Method Modal */}
                     <Modal isOpen={isPaymentModalOpen} onClose={() => setIsPaymentModalOpen(false)}>
-                        <div className="text-center p-2">
-                            <h3 className="text-2xl font-bold text-slate-900 mb-6">{t.pricing.modalTitle}</h3>
-                            <div className="space-y-4">
-                                <button
-                                    onClick={handleCreditCardClick}
-                                    className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-lg transition-all flex items-center justify-center gap-3 shadow-md"
-                                >
-                                    <CreditCard className="w-6 h-6" /> {t.pricing.credit}
-                                </button>
-                                <p className="text-red-500 text-sm font-bold mt-1">{t.pricing.creditNote}</p>
-                                
-                                <div className="relative flex py-2 items-center">
-                                    <div className="flex-grow border-t border-gray-300"></div>
-                                    <span className="flex-shrink-0 mx-4 text-gray-400 text-sm">OR</span>
-                                    <div className="flex-grow border-t border-gray-300"></div>
-                                </div>
+    <div className="text-center p-2">
+        <h3 className="text-2xl font-bold text-slate-900 mb-6">{t.pricing.modalTitle}</h3>
+        <div className="space-y-4">
+            <button
+                onClick={handleCreditCardClick}
+                className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-lg transition-all flex items-center justify-center gap-3 shadow-md"
+            >
+                <CreditCard className="w-6 h-6" /> {t.pricing.credit}
+            </button>
 
-                                <button
-                                    onClick={handleTransferClick}
-                                    className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-lg transition-all flex items-center justify-center gap-3 shadow-md"
-                                >
-                                    <Banknote className="w-6 h-6" /> {t.pricing.transfer}
-                                </button>
-                            </div>
-                        </div>
-                    </Modal>
+            <div className="relative flex py-2 items-center">
+                <div className="flex-grow border-t border-gray-300"></div>
+                <span className="flex-shrink-0 mx-4 text-gray-400 text-sm">OR</span>
+                <div className="flex-grow border-t border-gray-300"></div>
+            </div>
+
+            <button
+                onClick={handleTransferClick}
+                className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-lg transition-all flex items-center justify-center gap-3 shadow-md"
+            >
+                <Banknote className="w-6 h-6" /> {t.pricing.transfer}
+            </button>
+
+            {/* ⬇ これをここに移動 */}
+            <p className="text-red-500 text-sm font-bold mt-1">
+                {t.pricing.creditNote}
+            </p>
+        </div>
+    </div>
+</Modal>
                 </div>
             );
         };
